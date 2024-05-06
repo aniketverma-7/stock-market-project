@@ -20,11 +20,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -44,45 +47,38 @@ public class AuthController {
     private UserMapper userMapper;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(
-            @RequestBody LoginRequest loginRequest, HttpServletResponse servletResponse) throws GlobalExceptionHandler {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
-                        loginRequest.getPassword(),
-                        Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")))
-        );
-        System.out.println(authentication.getName());
-        System.out.println(userService.fetch(loginRequest.getEmail()).toString());
-
-//        String email = authentication.getName();
-//        User user = User.builder().email(email).build();
-//        String token = jwtUtil.createToken(user);
-//
-//        if (Objects.nonNull(authentication.getPrincipal())) {
-//            SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-//            if (Objects.nonNull(securityUser) && Objects.nonNull(securityUser.getUser())) {
-//                user = securityUser.getUser();
-//            }
-//        }
-//        UserRequest response = userMapper.mapEntityToResponse(user);
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        servletResponse.setHeader(JWT_RESPONSE_HEADER, token);
-//        servletResponse.setHeader("Access-Control-Expose-Headers", JWT_RESPONSE_HEADER);
-//        return ResponseEntity.ok(response);
-        return ResponseEntity.ok(new LoginResponse(HttpStatus.OK, "", ""));
+    public ResponseEntity<UserRequest> login(
+            @RequestBody LoginRequest loginRequest, HttpServletResponse servletResponse) {
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                loginRequest.getEmail(), loginRequest.getPassword()));
+        String email = authentication.getName();
+        User user = User.builder().email(email).build();
+        String token = jwtUtil.createToken(user);
+        if (Objects.nonNull(authentication.getPrincipal())) {
+            SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+            if (Objects.nonNull(securityUser) && Objects.nonNull(securityUser.getUser())) {
+                user = securityUser.getUser();
+            }
+        }
+        UserRequest response = userMapper.mapEntityToResponse(user);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        servletResponse.setHeader(JWT_RESPONSE_HEADER, token);
+        servletResponse.setHeader("Access-Control-Expose-Headers", JWT_RESPONSE_HEADER);
+        return ResponseEntity.ok(response);
     }
+
 
     @PostMapping("/signup")
     public ResponseEntity<LoginResponse> signup(@RequestBody UserRequest userRequest) throws GlobalExceptionHandler {
-        System.out.println(userRequest.toString());
         UserRequest response = userService.create(userRequest);
         if (Objects.isNull(response)) {
             throw new UserExistsException(userRequest.getEmail() + " already exists.");
         }
         User user = User.builder().email(userRequest.getEmail()).build();
         String token = jwtUtil.createToken(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new LoginResponse(HttpStatus.CREATED, user.getEmail(), token));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new LoginResponse(HttpStatus.CREATED.toString(), user.getEmail(), token));
     }
 
     @GetMapping("/validate")

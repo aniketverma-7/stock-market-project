@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginResponse {
-    private HttpStatus code;
+    private String code;
     private String email;
     private String token;
 }
