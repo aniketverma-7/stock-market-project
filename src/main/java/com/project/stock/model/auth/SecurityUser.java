@@ -1,6 +1,8 @@
 package com.project.stock.model.auth;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import com.project.stock.model.User;
@@ -22,7 +24,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(""));
+        return Collections.emptyList();
     }
 
     @Override

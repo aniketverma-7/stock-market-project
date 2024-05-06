@@ -11,7 +11,12 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginResponse {
-    private String code;
+    private int code;
     private String email;
     private String token;
+
+    public LoginResponse(int code, String token) {
+        this.code = code;
+        this.token = token;
+    }
 }
