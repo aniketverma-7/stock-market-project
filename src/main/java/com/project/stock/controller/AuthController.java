@@ -26,6 +26,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -62,11 +63,15 @@ public class AuthController {
                 user = securityUser.getUser();
             }
         }
-        UserRequest response = userMapper.mapEntityToResponse(user);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         servletResponse.setHeader(JWT_RESPONSE_HEADER, token);
         servletResponse.setHeader("Access-Control-Expose-Headers", JWT_RESPONSE_HEADER);
         return ResponseEntity.ok(new LoginResponse(HttpStatus.OK.value(), email, token));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<LoginResponse> logout(@RequestHeader("Authorization") String jwt) throws GlobalExceptionHandler{
+       jwtUtil.resolveClaims()
     }
 
 
@@ -82,7 +87,7 @@ public class AuthController {
     }
 
     @GetMapping("/validate")
-    public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String jwt){
+    public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String jwt) throws AuthenticationException {
         System.out.println("Line 86: "+StringUtils.isNotBlank(jwt));
         System.out.println("Line 87: "+jwt.startsWith(AuthConstants.TOKEN_PREFIX));
         if (StringUtils.isNotBlank(jwt) && jwt.startsWith(AuthConstants.TOKEN_PREFIX)) {

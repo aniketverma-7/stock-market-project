@@ -16,7 +16,6 @@ public class MyUserDetailsService implements UserDetailsService {
 
     public MyUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        System.out.println("Repository: " + userRepository.toString());
     }
 
 

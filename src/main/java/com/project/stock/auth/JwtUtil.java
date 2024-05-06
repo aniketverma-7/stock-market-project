@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtil {
-    // todo: shift to vault
     private final String SECRET_KEY = "mysecretkey";
     private final long TTL = 1440; // 1 day
 
@@ -67,7 +66,7 @@ public class JwtUtil {
     }
 
     public boolean validateClaims(Claims claims) throws AuthenticationException {
-        return Objects.nonNull(claims) && claims.getExpiration().after(new Date());
+       return Objects.nonNull(claims) && claims.getExpiration().after(new Date());
     }
 
     public String getEmail(Claims claims) {
