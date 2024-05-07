@@ -20,8 +20,10 @@ public class Watchlist {
     private Long watchlistId;
 
     @Column(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private Long userId;
 
     @Column(name = "stock_id")
+    @JoinColumn(name = "stock_id", referencedColumnName = "stock_id")
     private Long stockId;
 }
