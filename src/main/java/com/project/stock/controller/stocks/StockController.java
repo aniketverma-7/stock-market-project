@@ -1,4 +1,4 @@
-package com.project.stock.controller;
+package com.project.stock.controller.stocks;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

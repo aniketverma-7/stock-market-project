@@ -1,4 +1,4 @@
-package com.project.stock.controller;
+package com.project.stock.controller.auth;
 
 import com.project.stock.auth.JwtUtil;
 import com.project.stock.constant.AuthConstants;
@@ -69,10 +69,10 @@ public class AuthController {
         return ResponseEntity.ok(new LoginResponse(HttpStatus.OK.value(), email, token));
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<LoginResponse> logout(@RequestHeader("Authorization") String jwt) throws GlobalExceptionHandler{
-       jwtUtil.resolveClaims()
-    }
+//    @PostMapping("/logout")
+//    public ResponseEntity<LoginResponse> logout(@RequestHeader("Authorization") String jwt) throws GlobalExceptionHandler{
+//       jwtUtil.resolveClaims();
+//    }
 
 
     @PostMapping("/signup")
