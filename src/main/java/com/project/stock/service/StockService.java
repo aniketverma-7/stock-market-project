@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,7 +29,7 @@ public class StockService {
     private String apiHost;
 
 
-    public StockMutualDTO searchStockByName(String name) throws GlobalExceptionHandler {
+    public List<?> searchStockByName(String name) throws GlobalExceptionHandler {
         String apiUrl = url + name;
         System.out.println(apiUrl);
 
@@ -39,14 +40,19 @@ public class StockService {
                 .addHeader("X-RapidAPI-Key", apiKey)
                 .addHeader("X-RapidAPI-Host", apiHost)
                 .build();
-
         try {
             Response response = client.newCall(request).execute();
             if (response.isSuccessful()) {
                 assert response.body() != null;
                 String responseBody = response.body().string();
                 ObjectMapper mapper = new ObjectMapper();
-                return mapper.readValue(responseBody, StockMutualDTO.class);
+                StockMutualDTO stockMutualDTO = mapper.readValue(responseBody, StockMutualDTO.class);
+
+                List<Object> searchResult = new ArrayList<>();
+                stockMutualDTO.getData().getStock().forEach(searchResult::add);
+                stockMutualDTO.getData().getMutualFunds().forEach(searchResult::add);
+
+                return searchResult;
             }
         } catch (IOException e) {
             throw new GlobalExceptionHandler();
