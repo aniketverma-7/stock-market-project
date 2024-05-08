@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class NewsController {
 
-    @Autowired NewsAPIService apiService;
+    @Autowired private NewsAPIService apiService;
 
     @GetMapping(value = "/news") // Changed the value here
     public ResponseEntity<NewsDTO> getNews(HttpServletRequest request) throws GlobalExceptionHandler {

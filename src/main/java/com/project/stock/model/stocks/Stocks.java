@@ -26,31 +26,29 @@ public class Stocks {
 
     private String companyName;
 
-    private String sector;
+    private String type;
+
+    private BigDecimal price;
+
+    private BigDecimal change;
+
+    private BigDecimal changePercent;
+
+    private BigDecimal previousClose;
+
+    private Timestamp lastUpdateUtc;
+
+    private String countryCode;
 
     private String exchange;
 
-    private BigDecimal latestPrice;
+    private Timestamp exchangeOpen;
 
-    private BigDecimal prevClosePrice;
+    private Timestamp exchangeClose;
 
-    private BigDecimal openPrice;
+    private String timezone;
 
-    private BigDecimal highPrice;
+    private Integer utcOffsetSec;
 
-    private BigDecimal lowPrice;
-
-    private Integer volume;
-
-    private BigDecimal marketCap;
-
-    private BigDecimal peRatio;
-
-    private BigDecimal dividendYield;
-
-    private BigDecimal eps;
-
-    private BigDecimal beta;
-
-    private Timestamp lastUpdated;
+    private String currency;
 }
