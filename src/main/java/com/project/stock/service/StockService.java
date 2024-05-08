@@ -1,16 +1,11 @@
 package com.project.stock.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.stock.dto.news.NewsDTO;
-import com.project.stock.dto.stocks.MutualFundDTO;
-import com.project.stock.dto.stocks.StockDTO;
 import com.project.stock.dto.stocks.StockMutualDTO;
 import com.project.stock.exception.GlobalExceptionHandler;
-import com.project.stock.model.stocks.Stocks;
 import org.springframework.beans.factory.annotation.Value;
 import okhttp3.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.ArrayList;
