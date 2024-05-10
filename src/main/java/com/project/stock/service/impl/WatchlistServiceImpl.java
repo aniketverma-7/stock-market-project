@@ -7,6 +7,7 @@ import com.project.stock.dto.stocks.watchlist.WatchlistResponse;
 import com.project.stock.exception.GlobalExceptionHandler;
 import com.project.stock.mapper.StockMapper;
 import com.project.stock.mapper.WatchlistMapper;
+import com.project.stock.model.User;
 import com.project.stock.model.stocks.Stock;
 import com.project.stock.model.stocks.Watchlist;
 import com.project.stock.repository.StockRepository;
@@ -58,7 +59,8 @@ public class WatchlistServiceImpl implements WatchlistService {
         Optional<Stock> existing = stockRepository.findBySymbol(watchlistRequest.getStockDTO().getSymbol());
         if (existing.isPresent()) {
             Optional<Watchlist> watchlist = watchlistRepository.findByStockId(existing.get().getStockId());
-            if (watchlist.isPresent()) {
+            User user = userRepository.findByEmail(watchlistRequest.getEmail()).get();
+            if (watchlist.isPresent() && Long.compare(watchlist.get().getUserId(),user.getId()) == 0) {
                 return new WatchlistResponse(HttpStatus.CONFLICT.value(), watchlistRequest.getEmail(), watchlistRequest.getStockDTO());
             } else {
                 if(saveToWatchlist(watchlistRequest, existing.get()) != null)

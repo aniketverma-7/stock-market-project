@@ -13,4 +13,5 @@ import java.util.List;
 
 public interface StockService {
     public List<?> searchStockByName(String name) throws GlobalExceptionHandler;
+    public Double getCurrentPrice(String name) throws GlobalExceptionHandler;
 }

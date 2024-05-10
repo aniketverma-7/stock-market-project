@@ -1,4 +1,4 @@
-package com.project.stock.model.stocks;
+package com.project.stock.model;
 
 import com.project.stock.enums.TransactionType;
 import jakarta.persistence.*;
@@ -39,6 +39,4 @@ public class Transaction {
 
     @Column(name = "timestamp")
     private Timestamp timestamp;
-
-    // Getters and setters
 }

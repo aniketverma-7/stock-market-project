@@ -59,4 +59,31 @@ public class StockServiceImpl implements StockService {
         }
         return null;
     }
+
+    @Override
+    public Double getCurrentPrice(String name) throws GlobalExceptionHandler {
+        String apiUrl = url + name;
+        System.out.println(apiUrl);
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(apiUrl)
+                .addHeader("X-RapidAPI-Key", apiKey)
+                .addHeader("X-RapidAPI-Host", apiHost)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.isSuccessful()) {
+                assert response.body() != null;
+                String responseBody = response.body().string();
+                ObjectMapper mapper = new ObjectMapper();
+                StockMutualDTO stockMutualDTO = mapper.readValue(responseBody, StockMutualDTO.class);
+                return stockMutualDTO.getData().getStock().getFirst().getPrice();
+            }
+        } catch (IOException e) {
+            throw new GlobalExceptionHandler();
+        }
+        return null;
+    }
 }

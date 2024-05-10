@@ -18,26 +18,26 @@ public class Portfolio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "portfolio_id")
-    private long portfolioId;
+    private Long portfolioId;
 
     @Column(name = "user_id")
-    private long userId;
+    private Long userId;
 
     @Column(name = "stock_id")
-    private long stockId;
+    private Long stockId;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
     @Column(name = "avg_purchase_price")
-    private double avgPurchasePrice;
+    private Double avgPurchasePrice;
 
     @Column(name = "total_investment")
-    private double totalInvestment;
+    private Double totalInvestment;
 
     @Column(name = "current_price")
-    private double currentPrice;
+    private Double currentPrice;
 
     @Column(name = "total_value")
-    private double totalValue;
+    private Double totalValue;
 }
