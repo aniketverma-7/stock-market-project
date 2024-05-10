@@ -12,7 +12,7 @@ public class SearchData{
     public ArrayList<Object> eTF;
     public ArrayList<Object> index;
     @JsonProperty("mutual_fund")
-    public ArrayList<MutualFundDTO> mutualFunds;
+    public ArrayList<Object> mutualFunds;
     public ArrayList<Object> currency;
     public ArrayList<Object> futures;
 }

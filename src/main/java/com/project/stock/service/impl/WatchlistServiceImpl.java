@@ -95,5 +95,4 @@ public class WatchlistServiceImpl implements WatchlistService {
         return false;
     }
 
-
 }

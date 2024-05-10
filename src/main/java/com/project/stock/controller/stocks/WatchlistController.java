@@ -19,7 +19,6 @@ public class WatchlistController {
     @Autowired
     private WatchlistServiceImpl watchlistService;
 
-    //TODO ADD AND REMOVE FOR MUTUAL FUND
     @PostMapping("/add")
     public ResponseEntity<?> addStockToWatchList(@RequestBody WatchlistRequest watchlistRequest) throws GlobalExceptionHandler {
         WatchlistResponse watchlistResponse = watchlistService.addStockToWatchList(watchlistRequest);

@@ -38,7 +38,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     private StockMapper stockMapper;
     @Autowired
     private TransactionService transactionService;
-    //TODO cross check math
+    //
     @Override
     public Boolean buyStock(StockCall buy) throws GlobalExceptionHandler {
         User user = userRepository.findByEmail(buy.getEmail()).get();

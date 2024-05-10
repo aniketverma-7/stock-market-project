@@ -1,7 +1,7 @@
 package com.project.stock.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.stock.dto.stocks.StockMutualDTO;
+import com.project.stock.dto.stocks.SearchRequest;
 import com.project.stock.exception.GlobalExceptionHandler;
 import com.project.stock.service.StockService;
 import okhttp3.OkHttpClient;
@@ -46,12 +46,10 @@ public class StockServiceImpl implements StockService {
                 assert response.body() != null;
                 String responseBody = response.body().string();
                 ObjectMapper mapper = new ObjectMapper();
-                StockMutualDTO stockMutualDTO = mapper.readValue(responseBody, StockMutualDTO.class);
+                SearchRequest stockMutualDTO = mapper.readValue(responseBody, SearchRequest.class);
 
                 List<Object> searchResult = new ArrayList<>();
                 stockMutualDTO.getData().getStock().forEach(searchResult::add);
-                stockMutualDTO.getData().getMutualFunds().forEach(searchResult::add);
-
                 return searchResult;
             }
         } catch (IOException e) {
@@ -78,7 +76,7 @@ public class StockServiceImpl implements StockService {
                 assert response.body() != null;
                 String responseBody = response.body().string();
                 ObjectMapper mapper = new ObjectMapper();
-                StockMutualDTO stockMutualDTO = mapper.readValue(responseBody, StockMutualDTO.class);
+                SearchRequest stockMutualDTO = mapper.readValue(responseBody, SearchRequest.class);
                 return stockMutualDTO.getData().getStock().getFirst().getPrice();
             }
         } catch (IOException e) {
