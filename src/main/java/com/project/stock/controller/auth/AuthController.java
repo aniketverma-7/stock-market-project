@@ -66,7 +66,7 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         servletResponse.setHeader(JWT_RESPONSE_HEADER, token);
         servletResponse.setHeader("Access-Control-Expose-Headers", JWT_RESPONSE_HEADER);
-        return ResponseEntity.ok(new LoginResponse(HttpStatus.OK.value(), email, token));
+        return ResponseEntity.ok(new LoginResponse(HttpStatus.OK.value(), user.getEmail(), token));
     }
 
 //    @PostMapping("/logout")
@@ -86,23 +86,23 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new LoginResponse(HttpStatus.CREATED.value(), user.getEmail(), token));
     }
 
-    @GetMapping("/validate")
-    public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String jwt) throws AuthenticationException {
-        System.out.println("Line 86: "+StringUtils.isNotBlank(jwt));
-        System.out.println("Line 87: "+jwt.startsWith(AuthConstants.TOKEN_PREFIX));
-        if (StringUtils.isNotBlank(jwt) && jwt.startsWith(AuthConstants.TOKEN_PREFIX)) {
-            jwt = jwt.substring(AuthConstants.TOKEN_PREFIX.length());
-        } else {
-//            throw new GlobalExceptionHandler();
-        }
-        System.out.println("Line 93: "+jwt);
-        Claims claims = jwtUtil.parseJwtClaims(jwt);
-        System.out.println("Line 95: "+claims.toString());
-        UserRequest userRequest = new UserRequest();
-        if (jwtUtil.validateClaims(claims)) {
-            userRequest = userService.fetch(claims.getSubject());
-            System.out.println("Line 97: "+userRequest.toString());
-        }
-        return ResponseEntity.ok("Valid");
-    }
+//    @GetMapping("/validate")
+//    public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String jwt) throws AuthenticationException {
+//        System.out.println("Line 86: "+StringUtils.isNotBlank(jwt));
+//        System.out.println("Line 87: "+jwt.startsWith(AuthConstants.TOKEN_PREFIX));
+//        if (StringUtils.isNotBlank(jwt) && jwt.startsWith(AuthConstants.TOKEN_PREFIX)) {
+//            jwt = jwt.substring(AuthConstants.TOKEN_PREFIX.length());
+//        } else {
+////            throw new GlobalExceptionHandler();
+//        }
+//        System.out.println("Line 93: "+jwt);
+//        Claims claims = jwtUtil.parseJwtClaims(jwt);
+//        System.out.println("Line 95: "+claims.toString());
+//        UserRequest userRequest = new UserRequest();
+//        if (jwtUtil.validateClaims(claims)) {
+//            userRequest = userService.fetch(claims.getSubject());
+//            System.out.println("Line 97: "+userRequest.toString());
+//        }
+//        return ResponseEntity.ok("Valid");
+//    }
 }

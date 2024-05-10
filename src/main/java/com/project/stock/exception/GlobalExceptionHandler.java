@@ -1,5 +1,6 @@
 package com.project.stock.exception;
 
+import com.project.stock.dto.GenericResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -18,50 +19,52 @@ public class GlobalExceptionHandler extends Throwable {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "Invalid email or password"));
+                .body(new GenericResponse(HttpStatus.UNAUTHORIZED.value(), "Invalid email or password"));
     }
 
     @ExceptionHandler(LockedException.class)
     public ResponseEntity<?> handleLockedException(LockedException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "Account is locked"));
+                .body(new GenericResponse(HttpStatus.UNAUTHORIZED.value(), "Account is locked"));
     }
 
     @ExceptionHandler(UserExistsException.class)
-    public ResponseEntity<ErrorResponse> handleUserExistsException(UserExistsException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    public ResponseEntity<?> handleUserExistsException(UserExistsException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(InterruptedException.class)
+    public ResponseEntity<GenericResponse> handleInterruptedException(InterruptedException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErrorResponse> handleRunTimeException(RuntimeException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    public ResponseEntity<GenericResponse> handleRunTimeException(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidToken(AuthenticationException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+    public ResponseEntity<GenericResponse> handleInvalidToken(AuthenticationException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GenericResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<?> handleNullException(NullPointerException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new GenericResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.toString()));
     }
     @ExceptionHandler(IOException.class)
     public ResponseEntity<?> handleIOException(IOException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.toString()));
+                .body(new GenericResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.toString()));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleOtherException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.toString()));
+                .body(new GenericResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.toString()));
     }
 
 
 
-    @Getter
-    @AllArgsConstructor
-    public static class ErrorResponse {
-        private int code;
-        private String message;
-    }
 }

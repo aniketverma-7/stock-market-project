@@ -9,8 +9,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "watchlist")
 public class Watchlist {
 
@@ -26,4 +24,18 @@ public class Watchlist {
     @Column(name = "stock_id")
     @JoinColumn(name = "stock_id", referencedColumnName = "stock_id")
     private Long stockId;
+
+    public Watchlist() {
+    }
+
+    public Watchlist(Long userId, Long stockId) {
+        this.userId = userId;
+        this.stockId = stockId;
+    }
+
+    public Watchlist(Long watchlistId, Long userId, Long stockId) {
+        this.watchlistId = watchlistId;
+        this.userId = userId;
+        this.stockId = stockId;
+    }
 }

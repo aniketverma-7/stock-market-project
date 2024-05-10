@@ -1,13 +1,9 @@
 package com.project.stock.dto.stocks;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 
-@Data
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,13 +12,13 @@ public class StockDTO {
     private String symbol;
     private String name;
     private String type;
-    private BigDecimal price;
-    private BigDecimal change;
+    private Double price;
+    private Double change;
     @JsonProperty("change_percent")
-    private BigDecimal changePercent;
+    private Double changePercent;
 
     @JsonProperty("previous_close")
-    private BigDecimal previousClose;
+    private Double previousClose;
 
     @JsonProperty("last_update_utc")
     private String lastUpdateUtc;
@@ -47,6 +43,4 @@ public class StockDTO {
 
     @JsonProperty("google_mid")
     private String googleMid;
-
-    // Constructors, getters, and setters
 }

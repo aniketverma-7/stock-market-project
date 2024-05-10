@@ -14,21 +14,30 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "portfolio")
 public class Portfolio {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "portfolio_id")
-    private Long portfolioId;
+    private long portfolioId;
 
     @Column(name = "user_id")
-    private Long userId;
+    private long userId;
 
     @Column(name = "stock_id")
-    private Long stockId;
+    private long stockId;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 
     @Column(name = "avg_purchase_price")
-    private Double avgPurchasePrice;
+    private double avgPurchasePrice;
+
+    @Column(name = "total_investment")
+    private double totalInvestment;
+
+    @Column(name = "current_price")
+    private double currentPrice;
+
+    @Column(name = "total_value")
+    private double totalValue;
 }
