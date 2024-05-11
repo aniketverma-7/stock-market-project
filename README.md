@@ -3,6 +3,15 @@
 ## Prerequisites
 
 Before using the Stock Market API, ensure you have Postman installed from [Postman's official website](https://www.postman.com/).
+1. Java Version 22
+2. Spring Boot 3.2.5
+3. MySQL Version 8.0.36
+
+
+To install all the spring dependency, prerequisites should be satisfied before running the below command:
+```
+mvn clean install
+```
 
 ## Dependency Versions
 
