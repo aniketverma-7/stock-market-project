@@ -13,17 +13,6 @@ To install all the spring dependency, prerequisites should be satisfied before r
 mvn clean install
 ```
 
-## Dependency Versions
-
-- **Spring Boot**: 3.2.5
-- **Java Version**: 22
-- **JWT**: 0.9.1
-- **JAXB API**: 2.3.1
-- **MySQL Connector**: 8.0.33
-- **Commons Lang**: 3.12.0
-- **Mapstruct Processor**: 1.4.2.Final (Provided Scope)
-
-
 ### Database Schema
 
 To set up the database for the Stock Market API, create the following tables corresponding to the Java entity classes:
